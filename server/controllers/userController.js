@@ -14,6 +14,8 @@ const registerUser = async (req, res) => {
 
 // Logeddin User
 const loginUser = async (req, res) => {
+  console.log(req.body);
+
   const user = await User.findOne({ _id: req.body.id });
 
   const token = jwt.sign(

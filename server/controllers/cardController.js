@@ -1,16 +1,39 @@
 import mongoose from "mongoose";
 import Card from "../models/cardModel.js";
-import User from "../models/userModel.js";
 
 // Create New Card
 const createCard = async (req, res) => {
-  const owner = await User.create({});
+  const { type, price, members } = req.body;
+
+  if (!["vip", "standard", "family"].includes(type)) {
+    return res.status(400).json({ error: "Invalid type of card" });
+  }
+
+  if (
+    !(members.length > 0) ||
+    members.filter((member) => member !== "").length <= 0
+  ) {
+    return res
+      .status(400)
+      .json({ error: "You must provide at least one member to create a card" });
+  }
+
+  if (type === "vip" && members.length > 1) {
+    return res
+      .status(400)
+      .json({ error: "A vip card can't be used for more than one member" });
+  }
+
+  if (type === "standard" && members.length > 1) {
+    return res.status(400).json({
+      error: "A standard card can't be used for more than one member"
+    });
+  }
 
   const card = await Card.create({
-    type: "standard",
-    members: ["James Bond"],
-    price: 1500,
-    owner
+    type,
+    price,
+    members
   });
 
   res.status(201).json(card);
