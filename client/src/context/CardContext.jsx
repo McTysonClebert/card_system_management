@@ -9,6 +9,9 @@ const cardReducer = (state, action) => {
     case "SET_CARDS":
       return { ...state, cards: payload };
 
+    case "SET_CARD":
+      return { ...state, card: payload };
+
     case "CREATE_CARD":
       return { ...state, cards: [...state.cards, payload] };
 
@@ -25,7 +28,7 @@ const cardReducer = (state, action) => {
 };
 
 const CardContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cardReducer, { cards: [] });
+  const [state, dispatch] = useReducer(cardReducer, { cards: [], card: null });
 
   return (
     <CardContext.Provider value={{ ...state, dispatch }}>

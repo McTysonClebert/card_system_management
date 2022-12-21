@@ -1,15 +1,26 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useCard } from "../../hooks/useCard";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 const types = ["vip", "standard", "family"];
 
 const CardCreate = () => {
   const [members, setMembers] = useState({ first: "" });
   const [selectedType, setSelectedType] = useState(types[0]);
-  const [price, setPrice] = useState(0);
   const { createCard, isLoading, error } = useCard();
+  const addForm = useRef();
+
+  // useEffect(() => {
+  //   const getCard = async (cardId) => {
+  //     await fetchingCard(cardId);
+  //   };
+
+  //   if (id) {
+  //     getCard(id);
+  //   }
+  // }, [id]);
 
   const handleAddMember = () => {
     if (Object.entries(members).length === 1) {
@@ -21,61 +32,30 @@ const CardCreate = () => {
     }
   };
 
-  const handleCardTypeChange = (e) => {
-    setSelectedType(e.target.value);
-
-    switch (e.target.value) {
-      case "family":
-        setPrice(2500);
-        break;
-
-      case "standard":
-        setPrice(1500);
-        setMembers({ first: members.first });
-        break;
-
-      default:
-        setPrice(0);
-        setMembers({ first: members.first });
-        break;
-    }
-  };
-
   const handleCreateCard = async (e) => {
     e.preventDefault();
 
     const card = {
       type: selectedType,
-      price,
       members: Object.entries(members).map(([key, value]) => value)
     };
 
     await createCard(card);
+
+    setMembers({ first: "" });
+    setSelectedType(types[0]);
   };
 
   return (
-    <div className="px-4 py-8 md:p-10 md:w-2/6">
+    <div className="bg-slate-800 w-screen p-4 md:w-1/3 md:h-screen">
       {error && (
-        <div>
-          {toast.error(error)}
-          <ToastContainer
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            limit={1}
-          />
-        </div>
+        <p className="bg-red-100 text-red-900 p-4 text-center text-sm italic rounded-lg">
+          {error}
+        </p>
       )}
 
       <h1 className="text-2xl font-bold my-3 text-center">Create New Card</h1>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" ref={addForm}>
         <div className="flex flex-col gap-1">
           <label className="font-bold" htmlFor="name">
             Name
@@ -83,7 +63,7 @@ const CardCreate = () => {
           <input
             required
             value={members.first}
-            className="bg-gray-200 py-2 px-4 outline-none border-none rounded-lg"
+            className="bg-gray-900 py-2 px-4 outline-none border-none rounded-lg"
             type="text"
             placeholder="Enter the name of the client"
             onChange={(e) => setMembers({ ...members, first: e.target.value })}
@@ -95,8 +75,8 @@ const CardCreate = () => {
           </label>
           <select
             defaultValue={selectedType}
-            className="bg-gray-200 py-2 px-4 outline-none border-none rounded-lg"
-            onChange={handleCardTypeChange}
+            className="bg-gray-900 py-2 px-4 outline-none border-none rounded-lg"
+            onChange={(e) => setSelectedType(e.target.value)}
           >
             {types.map((type, index) => (
               <option key={index} value={type}>
@@ -105,26 +85,13 @@ const CardCreate = () => {
             ))}
           </select>
         </div>
-        {selectedType !== "vip" && (
-          <div className="flex flex-col gap-1">
-            <label className="font-bold" htmlFor="price">
-              Price
-            </label>
-            <input
-              required
-              value={price}
-              className="bg-gray-200 py-2 px-4 outline-none border-none rounded-lg"
-              type="number"
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-        )}
 
         {selectedType === "family" && Object.entries(members).length < 4 && (
           <button
             type="button"
-            className="bg-slate-700 text-gray-50 py-2 px-4 my-2 outline-none border-none rounded-lg"
+            className="bg-sky-400 text-slate-700 py-2 px-4 my-2 outline-none border-none rounded-lg"
             onClick={handleAddMember}
+            disabled={isLoading || members.first === ""}
           >
             Add Member
           </button>
@@ -140,7 +107,7 @@ const CardCreate = () => {
                 <input
                   key={index}
                   value={value}
-                  className="bg-gray-200 py-2 px-4 outline-none border-none rounded-lg"
+                  className="bg-slate-900 py-2 px-4 outline-none border-none rounded-lg"
                   type="text"
                   onChange={(e) =>
                     setMembers({ ...members, [position]: e.target.value })
@@ -152,7 +119,7 @@ const CardCreate = () => {
         )}
         <button
           type="submit"
-          className="bg-gray-900 text-gray-50 py-3 px-4 my-2 outline-none border-none rounded-lg"
+          className="bg-sky-300 text-slate-900 py-3 px-4 my-2 outline-none border-none rounded-lg"
           onClick={handleCreateCard}
           disabled={isLoading}
         >

@@ -1,12 +1,13 @@
-import CardCreate from "./components/cards/CardCreate";
-import CardList from "./components/cards/CardList";
+import { Routes, Route } from "react-router-dom";
+import CardView from "./pages/CardView";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <div className="flex flex-col w-screen md:h-screen justify-center md:flex-row md:overflow-hidden">
-      <CardCreate />
-      <CardList />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/view/:id" element={<CardView />} />
+    </Routes>
   );
 };
 

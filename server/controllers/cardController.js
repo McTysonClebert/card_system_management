@@ -3,7 +3,13 @@ import Card from "../models/cardModel.js";
 
 // Create New Card
 const createCard = async (req, res) => {
-  const { type, price, members } = req.body;
+  const { type, members } = req.body;
+
+  let number;
+
+  do {
+    number = Math.round(Math.random() * (99999 - 10000)) + 10000;
+  } while (await Card.exists({ number }));
 
   if (!["vip", "standard", "family"].includes(type)) {
     return res.status(400).json({ error: "Invalid type of card" });
@@ -30,9 +36,12 @@ const createCard = async (req, res) => {
     });
   }
 
+  let price = type === "family" ? 2500 : type === "standard" ? 1500 : 0;
+
   const card = await Card.create({
     type,
     price,
+    number,
     members
   });
 

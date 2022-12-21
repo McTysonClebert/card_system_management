@@ -7,8 +7,9 @@ const useCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchingCard = async () => {
+  const fetchingCards = async () => {
     setIsLoading(true);
+    setError(null);
 
     try {
       const response = await fetch("http://localhost:8000/api/v1/cards");
@@ -23,9 +24,32 @@ const useCard = () => {
         setIsLoading(false);
         dispatch({
           type: "SET_CARDS",
-          payload: json.sort(
-            (a, b) => new Date(b.createAt) - new Date(a.createAt)
-          )
+          payload: json
+        });
+      }
+    } catch (error) {
+      console.log(`Error fetching card: ${error}`);
+    }
+  };
+
+  const fetchingCard = async (id) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/cards/${id}`);
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        setError(json.error);
+      }
+
+      if (response.ok) {
+        setIsLoading(false);
+        dispatch({
+          type: "SET_CARD",
+          payload: json
         });
       }
     } catch (error) {
@@ -35,6 +59,7 @@ const useCard = () => {
 
   const createCard = async (card) => {
     setIsLoading(true);
+    setError(null);
 
     try {
       const response = await fetch("http://localhost:8000/api/v1/cards", {
@@ -64,6 +89,7 @@ const useCard = () => {
 
   const deleteCard = async (id) => {
     setIsLoading(true);
+    setError(null);
 
     try {
       const response = await fetch(`http://localhost:8000/api/v1/cards/${id}`, {
@@ -90,7 +116,14 @@ const useCard = () => {
     }
   };
 
-  return { fetchingCard, createCard, deleteCard, isLoading, error };
+  return {
+    fetchingCards,
+    fetchingCard,
+    createCard,
+    deleteCard,
+    isLoading,
+    error
+  };
 };
 
 export { useCard };
