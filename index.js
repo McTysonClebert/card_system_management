@@ -23,11 +23,11 @@ mongoose
   .connect(uri)
   .then(() => {
     log("Database connection established successfully");
+
+    app.listen(port, () => {
+      log(`Server listening on http://localhost:${port}`);
+    });
   })
   .catch((error) => {
     log(error);
   });
-
-app.listen(port, () => {
-  log(`Server listening on http://localhost:${port}`);
-});
