@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useCardContext } from "../context/CardContext";
 
+const url = "https://busy-gray-ray-shoe.cyclic.app/api/v1/cards";
+// const url = "http://localhost:8000/api/v1/cards";
+
 const useCard = () => {
   const { dispatch } = useCardContext();
 
@@ -12,7 +15,7 @@ const useCard = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/cards");
+      const response = await fetch(url);
       const json = await response.json();
 
       if (!response.ok) {
