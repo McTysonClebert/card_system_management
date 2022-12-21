@@ -1,11 +1,11 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createCard,
   getCards,
   getCard,
   updatedCard,
   deletedCard
-} from "../controllers/cardController.js";
+} = require("../controllers/cardController");
 // import { authMiddleWare } from "../middlewares/authMiddleware.js";
 
 const cardRouter = express.Router();
@@ -14,4 +14,4 @@ const cardRouter = express.Router();
 cardRouter.route("/").get(getCards).post(createCard);
 cardRouter.route("/:id").get(getCard).patch(updatedCard).delete(deletedCard);
 
-export default cardRouter;
+module.exports = cardRouter;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useCardContext } from "../context/CardContext";
 
-const url = "https://busy-gray-ray-shoe.cyclic.app/api/v1/cards";
-// const url = "http://localhost:8000/api/v1/cards";
+// const url = "https://busy-gray-ray-shoe.cyclic.app/api/v1/cards";
+const url = "http://localhost:8000/api/v1/cards";
 
 const useCard = () => {
   const { dispatch } = useCardContext();
@@ -15,7 +15,14 @@ const useCard = () => {
     setError(null);
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      });
       const json = await response.json();
 
       if (!response.ok) {
@@ -40,7 +47,14 @@ const useCard = () => {
     setError(null);
 
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/cards/${id}`);
+      const response = await fetch(`http://localhost:8000/api/v1/cards/${id}`, {
+        mode: "cors",
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      });
       const json = await response.json();
 
       if (!response.ok) {

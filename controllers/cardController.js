@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import Card from "../models/cardModel.js";
+const mongoose = require("mongoose");
+const Card = require("../models/cardModel");
 
 // Create New Card
 const createCard = async (req, res) => {
@@ -151,4 +151,4 @@ const deletedCard = async (req, res) => {
   res.status(202).json(cardId);
 };
 
-export { createCard, getCards, getCard, updatedCard, deletedCard };
+module.exports = { createCard, getCards, getCard, updatedCard, deletedCard };
