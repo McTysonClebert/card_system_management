@@ -36,7 +36,7 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(uri)
   .then(() => {
-    app.listen(port, () => {
+    app.listen(port || 3000, () => {
       log(`Server listening on http://localhost:${port}`);
     });
   })
