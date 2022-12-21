@@ -1,17 +1,16 @@
-const express = require("express");
-const {
+import express from "express";
+
+import {
   createCard,
   getCards,
   getCard,
   updatedCard,
   deletedCard
-} = require("../controllers/cardController");
-// import { authMiddleWare } from "../middlewares/authMiddleware.js";
+} from "../controllers/cardController.js";
 
 const cardRouter = express.Router();
 
-// cardRouter.use(authMiddleWare);
 cardRouter.route("/").get(getCards).post(createCard);
 cardRouter.route("/:id").get(getCard).patch(updatedCard).delete(deletedCard);
 
-module.exports = cardRouter;
+export default cardRouter;

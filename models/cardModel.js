@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const cardSchema = new mongoose.Schema(
   {
@@ -10,4 +10,4 @@ const cardSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("card", cardSchema);
+export default mongoose.model("card", cardSchema);
