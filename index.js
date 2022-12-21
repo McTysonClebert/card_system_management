@@ -1,4 +1,4 @@
-import "dotenv/config";
+// import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -17,6 +17,12 @@ const { log } = console;
 const app = express();
 
 // Applying middlewares to the application
+app.use(express.static(path.join(__dirname, "./client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./client/dist/index.html"));
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
