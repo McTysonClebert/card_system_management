@@ -1,4 +1,4 @@
-// import "dotenv/config";
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -19,7 +19,7 @@ app.use("/api/v1/cards", cardRouter);
 // Connect to the database and start the server of the application
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(uri)
+  .connect("urii")
   .then(() => {
     log("Database connection established successfully");
 
