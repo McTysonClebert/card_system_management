@@ -1,11 +1,18 @@
-// import "dotenv/config";
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import cardRouter from "./routes/cardRouter.js";
 import userRouter from "./routes/userRouter.js";
 
-const { PORT: port, DATABASE_URI: uri } = process.env;
+const {
+  PORT: port,
+  DEV_DATABASE_URI: devUri,
+  PROD_DATABASE_URI: prodUri,
+  NODE_ENV: nodeEnv
+} = process.env;
+
+const uri = nodeEnv === "development" ? devUri : prodUri;
 const { log } = console;
 const app = express();
 
