@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import cardRouter from "./routes/cardRouter.js";
 
 const { log } = console;
-const uri = process.env.DATABASE_URI;
+const { DATABASE_URI: uri, PORT: port } = process.env;
 const app = express();
 
 // Applying middlewares to the application
@@ -17,12 +17,11 @@ app.use(cors());
 app.use("/api/v1/cards", cardRouter);
 
 // Connect to the database and start the server of the application
+mongoose.set("strictQuery", false);
 mongoose
   .connect(uri)
   .then(() => {
     log("Database connection established successfully");
-
-    const port = process.env.PORT || 3000;
 
     app.listen(port, () => {
       log(`Server listening on http://localhost:${port}`);
