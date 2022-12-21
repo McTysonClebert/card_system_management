@@ -21,7 +21,7 @@ mongoose.set("strictQuery", false);
 mongoose
   .connect(uri)
   .then(() => {
-    app.listen(port || 8000, () => {
+    app.listen(port || 3000, () => {
       log(`Server listening on http://localhost:${port}`);
     });
   })
