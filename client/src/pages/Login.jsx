@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { Puff } from "react-loader-spinner";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import { useUser } from "../hooks/useUser";
 import Error from "../components/Error";
@@ -10,7 +10,6 @@ const roles = ["admin", "user"];
 
 const Login = () => {
   const { user } = useUserContext();
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +23,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/", { replace: true });
+      redirect("/");
     }
   }, [user]);
 

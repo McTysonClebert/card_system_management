@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import CardCreate from "../components/cards/CardCreate";
 import CardList from "../components/cards/CardList";
 import { useUserContext } from "../context/UserContext";
 
 const Home = () => {
-  const navigate = useNavigate();
   const { user } = useUserContext();
 
   useEffect(() => {
     if (!user) {
-      navigate("/login");
+      redirect("/login");
     }
   }, [user]);
 

@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, redirect } from "react-router-dom";
 import Error from "../components/Error";
 import { useCardContext } from "../context/CardContext";
 import { useCard } from "../hooks/useCard";
 
 const Verify = () => {
-  const navigate = useNavigate();
-
   const { id } = useParams();
   const [number, setNumber] = useState(0);
   const { verified } = useCardContext();
@@ -20,7 +18,7 @@ const Verify = () => {
 
   useEffect(() => {
     if (verified) {
-      navigate(`/view/${id}`);
+      redirect(`/view/${id}`);
     }
   }, [verified]);
 
