@@ -1,10 +1,16 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Puff } from "react-loader-spinner";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../context/UserContext";
 import { useUser } from "../hooks/useUser";
 
 const roles = ["admin", "user"];
 
 const Login = () => {
+  const { user } = useUserContext();
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState(roles[0]);
@@ -14,6 +20,12 @@ const Login = () => {
     e.preventDefault();
     await loginUser({ username, password, role: selectedRole });
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user]);
 
   return (
     <div className="bg-slate-800 text-white w-screen h-screen p-4 flex flex-col justify-center items-center">

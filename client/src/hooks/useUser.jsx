@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 const url = "https://card-system-management.onrender.com/api/v1/users";
@@ -9,7 +8,6 @@ const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { dispatch } = useUserContext();
-  const navigate = useNavigate();
 
   const registerUser = async (user) => {
     setIsLoading(true);
@@ -67,7 +65,6 @@ const useUser = () => {
       if (response.ok) {
         localStorage.setItem("user", JSON.stringify(json));
         dispatch({ type: "LOGIN_USER", payload: json });
-        navigate("/");
       }
     } catch (error) {
       console.log(`Error: ${error}`);
