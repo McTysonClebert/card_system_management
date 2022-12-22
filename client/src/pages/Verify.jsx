@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams, redirect } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Error from "../components/Error";
 import { useCardContext } from "../context/CardContext";
 import { useCard } from "../hooks/useCard";
@@ -11,6 +11,8 @@ const Verify = () => {
   const { verified } = useCardContext();
   const { verifyCard, isLoading, error } = useCard();
 
+  const navigate = useNavigate();
+
   const handleConnect = async (e) => {
     e.preventDefault();
     await verifyCard(id, number);
@@ -18,7 +20,7 @@ const Verify = () => {
 
   useEffect(() => {
     if (verified) {
-      redirect(`/view/${id}`);
+      navigate(`/view/${id}`, { replace: true });
     }
   }, [verified]);
 

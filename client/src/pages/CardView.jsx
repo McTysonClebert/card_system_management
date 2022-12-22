@@ -19,7 +19,7 @@ const CardExport = () => {
   return (
     <div className="flex flex-col justify-center items-center bg-slate-800 text-white w-screen h-screen p-4">
       {error && <Error error={error} />}
-      <CardItem card={card} />
+      {!error && <CardItem card={card} />}
     </div>
   );
 };

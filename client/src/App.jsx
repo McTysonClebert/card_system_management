@@ -13,10 +13,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/export/:id" element={<CardExport />} />
         <Route path="/view/:id" element={<CardView />} />
         <Route path="/verify/:id" element={<Verify />} />
-        <Route path="/export/:id" element={<CardExport />} />
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Navigate to={"/"} replace={true} />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 const url = "https://card-system-management.onrender.com/api/v1/users";
 // const url = "http://localhost:8000/api/v1/users";
 
 const useUser = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const { dispatch } = useUserContext();
@@ -73,6 +76,7 @@ const useUser = () => {
 
   const logoutUser = () => {
     dispatch({ type: "LOGOUT_USER" });
+    navigate("/login", { replace: true });
   };
 
   return { registerUser, loginUser, logoutUser, isLoading, error };
