@@ -24,10 +24,12 @@ const CardList = () => {
 
   return (
     <div className="bg-slate-700 w-screen p-4 md:flex-1 md:overflow-y-auto">
-      {cards.length <= 0 && (
+      {cards.length <= 0 ? (
         <h1 className="text-2xl font-bold my-3 text-center">
           Card List Is Empty
         </h1>
+      ) : (
+        <h1 className="text-2xl font-bold my-3 text-center">Card List</h1>
       )}
 
       <form className="flex flex-col gap-1 justify-center items-center mx-auto py-8 md:flex-row md:w-2/3">
@@ -35,7 +37,7 @@ const CardList = () => {
           <input
             type="text"
             placeholder="Search"
-            className="w-full outline-none bg-transparent border-none p-3"
+            className="w-full outline-none bg-transparent border-none p-3 text-lg"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             disabled={cards.length <= 0}
@@ -43,7 +45,7 @@ const CardList = () => {
         </div>
         <select
           name="type"
-          className="bg-gray-900 p-3 outline-none border-none rounded-lg w-full md:w-1/4"
+          className="bg-gray-900 p-3 outline-none border-none rounded-lg w-full md:w-1/4 text-lg"
           onChange={(e) =>
             setSelectedType(e.target.value !== "all" ? e.target.value : null)
           }
@@ -56,26 +58,17 @@ const CardList = () => {
         </select>
       </form>
 
-      {cards.length > 0 && (
-        <h1 className="text-2xl font-bold my-3 text-center">Card List</h1>
-      )}
-
       <ul className="flex flex-col gap-4 md:items-center">
         {cards
-          .filter((card) => {
-            if (!selectedType) return card.type !== selectedType;
-            else return card.type === selectedType;
+          .filter((item) => {
+            if (!selectedType) return item.type !== selectedType;
+            else return item.type === selectedType;
           })
-          .filter((card) => {
-            return (
-              card.members[0]
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-              card.price
-                .toString()
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase())
-            );
+          .filter((item) => {
+            return item.price
+              .toString()
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
           })
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
           .map((card) => (

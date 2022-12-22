@@ -23,34 +23,28 @@ const CardItem = ({ card }) => {
       } border-l-8 flex flex-col bg-slate-900 p-4 rounded-lg shadow-lg gap-2 md:w-2/3 relative`}
     >
       <p className="text-gray-50 text-xl capitalize font-bold">
-        Card Type:{" "}
-        <span className="text-slate-500 font-normal">{card.type}</span>
+        Card Type: <span className="text-sky-400 font-normal">{card.type}</span>
       </p>
       {card.type !== "vip" && (
         <p className="text-gray-50 text-xl capitalize font-bold">
-          Price:{" "}
-          <span className="text-slate-500 font-normal">{card.price}</span> HTG
+          Price: <span className="text-sky-400 font-normal">{card.price}</span>{" "}
+          HTG
         </p>
       )}
       <p className="text-gray-50 text-xl capitalize font-bold">
         Card Number:{" "}
-        <span className="text-slate-500 font-normal">{card.number}</span>
+        <span className="text-sky-400 font-normal">{card.number}</span>
       </p>
-      <div className="flex flex-col">
-        <p className="text-gray-50 text-xl capitalize font-bold">Members:</p>
-        <ul className="text-slate-500 px-2 italic list-inside list-disc font-normal">
-          {card.members.map((member) => (
-            <li key={member}>{member}</li>
-          ))}
-        </ul>
-      </div>
+      <p className="text-gray-50 text-xl capitalize font-bold">
+        Client: <span className="text-sky-400 font-normal">{card.name}</span>
+      </p>
       <div className="p-2 flex gap-4 justify-end">
         <BsTrashFill
           size={20}
           className="cursor-pointer"
           onClick={handleDelete}
         />
-        <Link to={`/view/${card._id}`}>
+        <Link to={`/export/${card._id}`}>
           <TfiExport size={20} className="cursor-pointer" />
         </Link>
       </div>

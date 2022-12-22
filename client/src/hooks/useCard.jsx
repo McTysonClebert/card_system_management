@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useCardContext } from "../context/CardContext";
 
-const url = "https://card-system-management.onrender.com/api/v1/cards";
+// const url = "https://card-system-management.onrender.com/api/v1/cards";
+const url = "http://localhost:8000/api/v1/cards";
 
 const useCard = () => {
   const { dispatch } = useCardContext();
@@ -73,6 +74,39 @@ const useCard = () => {
     }
   };
 
+  const verifyCard = async (id, number) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${url}/${id}`, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ number })
+      });
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        setError(json.error);
+      }
+
+      if (response.ok) {
+        setIsLoading(false);
+        dispatch({
+          type: "SET_VERIFY",
+          payload: json
+        });
+      }
+    } catch (error) {
+      console.log(`Error fetching card: ${error}`);
+    }
+  };
+
   const createCard = async (card) => {
     setIsLoading(true);
     setError(null);
@@ -135,6 +169,7 @@ const useCard = () => {
   return {
     fetchingCards,
     fetchingCard,
+    verifyCard,
     createCard,
     deleteCard,
     isLoading,

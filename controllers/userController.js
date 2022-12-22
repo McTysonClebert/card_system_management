@@ -1,22 +1,27 @@
+import validator from "validator";
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
-
-// Get All Users
-const getUsers = async (req, res) => {
-  res.status(200).json(await User.find({}));
-};
+import bcrypt from "bcrypt";
 
 // Register New User
 const registerUser = async (req, res) => {
-  const user = await User.create({ admin: false });
-  res.status(201).json(user);
-};
+  const { username, password, role } = req.body;
 
-// Logeddin User
-const loginUser = async (req, res) => {
-  console.log(req.body);
+  if (!username || !password || !role) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
 
-  const user = await User.findOne({ _id: req.body.id });
+  if (await User.findOne({ username })) {
+    return res.status(403).json({ error: "Username already in use" });
+  }
+
+  if (!validator.isStrongPassword(password)) {
+    return res.status(400).json({ error: "Password is not strong enough" });
+  }
+
+  const hashPassword = await bcrypt.hash(password, 12);
+
+  const user = await User.create({ username, password: hashPassword, role });
 
   const token = jwt.sign(
     {
@@ -28,7 +33,44 @@ const loginUser = async (req, res) => {
     }
   );
 
-  res.status(200).json({ token });
+  res.status(201).json({ username: user.username, role: user.role, token });
 };
 
-export { getUsers, registerUser, loginUser };
+// Logeddin User
+const loginUser = async (req, res) => {
+  const { username, password, role } = req.body;
+
+  if (!username || !password || !role) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    return res.status(404).json({ error: "Username not found" });
+  }
+
+  if (!(await bcrypt.compare(password, user.password))) {
+    return res.status(400).json({ error: "Password is not valid" });
+  }
+
+  if (user.role !== "admin" && user.role !== role) {
+    return res
+      .status(403)
+      .json({ error: "You are not allowed to connect as admin" });
+  }
+
+  const token = jwt.sign(
+    {
+      _id: user._id
+    },
+    process.env.SECRET_TOKEN_KEY,
+    {
+      expiresIn: "3h"
+    }
+  );
+
+  res.status(201).json({ username: user.username, role: user.role, token });
+};
+
+export { registerUser, loginUser };

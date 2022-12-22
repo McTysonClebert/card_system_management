@@ -12,6 +12,9 @@ const cardReducer = (state, action) => {
     case "SET_CARD":
       return { ...state, card: payload };
 
+    case "SET_VERIFY":
+      return { ...state, verified: payload.verified, card: payload.card };
+
     case "CREATE_CARD":
       return { ...state, cards: [...state.cards, payload] };
 
@@ -28,7 +31,11 @@ const cardReducer = (state, action) => {
 };
 
 const CardContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cardReducer, { cards: [], card: null });
+  const [state, dispatch] = useReducer(cardReducer, {
+    cards: [],
+    card: null,
+    verified: false
+  });
 
   return (
     <CardContext.Provider value={{ ...state, dispatch }}>

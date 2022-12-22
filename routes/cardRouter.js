@@ -4,13 +4,13 @@ import {
   createCard,
   getCards,
   getCard,
-  updatedCard,
+  verifyCard,
   deletedCard
 } from "../controllers/cardController.js";
 
 const cardRouter = express.Router();
 
 cardRouter.route("/").get(getCards).post(createCard);
-cardRouter.route("/:id").get(getCard).patch(updatedCard).delete(deletedCard);
+cardRouter.route("/:id").get(getCard).delete(deletedCard).post(verifyCard);
 
 export default cardRouter;

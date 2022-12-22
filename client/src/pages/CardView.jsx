@@ -1,38 +1,20 @@
-import { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import CardItem from "../components/cards/CardItem";
 import { useCardContext } from "../context/CardContext";
-import { useCard } from "../hooks/useCard";
-import QRCode from "qrcode";
 
 const CardView = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  const { fetchingCard } = useCard();
   const { card } = useCardContext();
-  const [image, setImage] = useState();
-
-  const generateQR = async () => {
-    try {
-      const url = window.location.href;
-      setImage(await QRCode.toDataURL(url));
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   useEffect(() => {
-    const getCard = async (cardId) => {
-      await generateQR();
-      await fetchingCard(cardId);
-    };
-
-    getCard(id);
+    if (!card) {
+      navigate(`/login/${id}`);
+    }
   }, []);
 
-  return (
-    <div className="bg-gray-500 w-96 h-52 flex p-4 mx-auto my-4">
-      <img src={image} alt="" className="bg-black" />
-    </div>
-  );
+  return <CardItem card={card} />;
 };
 
 export default CardView;
