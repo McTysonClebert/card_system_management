@@ -1,5 +1,6 @@
 import { BsTrashFill } from "react-icons/bs";
 import { TfiExport } from "react-icons/tfi";
+import { Puff } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useCard } from "../../hooks/useCard";
 
@@ -11,6 +12,14 @@ const CardItem = ({ card }) => {
       await deleteCard(card._id);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center">
+        <Puff />
+      </div>
+    );
+  }
 
   return (
     <li

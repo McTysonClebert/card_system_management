@@ -3,6 +3,7 @@ import { useCardContext } from "../../context/CardContext";
 import CardItem from "./CardItem";
 import { useCard } from "../../hooks/useCard";
 import { useState } from "react";
+import { Puff } from "react-loader-spinner";
 
 const CardList = () => {
   const { cards } = useCardContext();
@@ -18,12 +19,14 @@ const CardList = () => {
     getCards();
   }, []);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <div className="bg-slate-700 w-screen p-4 md:flex-1 md:overflow-y-auto">
+    <div className="bg-slate-700 w-screen p-4 md:flex-1 md:overflow-y-auto relative">
+      {isLoading && (
+        <div className="flex justify-center items-center">
+          <Puff />
+        </div>
+      )}
+
       {cards.length <= 0 ? (
         <h1 className="text-2xl font-bold my-3 text-center">
           Card List Is Empty

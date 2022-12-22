@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Puff } from "react-loader-spinner";
 import { useCard } from "../../hooks/useCard";
 
 const types = ["vip", "standard", "family"];
@@ -33,7 +34,14 @@ const CardCreate = () => {
       )}
 
       <h1 className="text-2xl font-bold my-3 text-center">Create New Card</h1>
+
       <form className="flex flex-col gap-4">
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <Puff />
+          </div>
+        )}
+
         <div className="flex flex-col gap-1">
           <label className="font-bold" htmlFor="name">
             Name
