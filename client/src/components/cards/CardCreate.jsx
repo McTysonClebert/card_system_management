@@ -27,11 +27,7 @@ const CardCreate = () => {
 
   return (
     <div className="bg-slate-800 w-screen p-4 py-8 md:w-1/3 md:h-screen">
-      {error && (
-        <p className="bg-red-100 text-red-900 p-4 text-center text-sm italic rounded-lg">
-          {error}
-        </p>
-      )}
+      {error && <Error error={error} />}
 
       <h1 className="text-2xl font-bold my-3 text-center">Create New Card</h1>
 

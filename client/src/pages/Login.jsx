@@ -4,6 +4,7 @@ import { Puff } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import { useUser } from "../hooks/useUser";
+import Error from "../components/Error";
 
 const roles = ["admin", "user"];
 
@@ -29,11 +30,7 @@ const Login = () => {
 
   return (
     <div className="bg-slate-800 text-white w-screen h-screen p-4 flex flex-col justify-center items-center">
-      {error && (
-        <p className="bg-red-100 text-red-900 p-4 text-center text-sm italic rounded-lg w-screen my-10 md:w-1/3">
-          {error}
-        </p>
-      )}
+      {error && <Error error={error} />}
 
       <h1 className="text-2xl font-bold my-3 text-center">Login</h1>
       <form className="flex flex-col gap-4 w-full md:w-1/3">

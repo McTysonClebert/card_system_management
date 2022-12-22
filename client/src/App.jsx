@@ -16,7 +16,7 @@ const App = () => {
         <Route path="/verify/:id" element={<Verify />} />
         <Route path="/view/:id" element={<CardView />} />
         <Route path="/export/:id" element={<CardExport />} />
-        <Route path="*" element={<Navigate to={"/"} />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   );

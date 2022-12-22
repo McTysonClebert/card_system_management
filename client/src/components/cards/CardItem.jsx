@@ -24,28 +24,29 @@ const CardItem = ({ card }) => {
   return (
     <li
       className={`${
-        card.type === "vip"
+        card?.type === "vip"
           ? "border-l-yellow-500"
-          : card.type === "family"
+          : card?.type === "family"
           ? "border-l-gray-500"
           : "border-l-orange-200"
       } border-l-8 flex flex-col bg-slate-900 p-4 rounded-lg shadow-lg gap-2 md:w-2/3 relative`}
     >
       <p className="text-gray-50 text-xl capitalize font-bold">
-        Card Type: <span className="text-sky-400 font-normal">{card.type}</span>
+        Card Type:{" "}
+        <span className="text-sky-400 font-normal">{card?.type}</span>
       </p>
-      {card.type !== "vip" && (
+      {card?.type !== "vip" && (
         <p className="text-gray-50 text-xl capitalize font-bold">
-          Price: <span className="text-sky-400 font-normal">{card.price}</span>{" "}
+          Price: <span className="text-sky-400 font-normal">{card?.price}</span>{" "}
           HTG
         </p>
       )}
       <p className="text-gray-50 text-xl capitalize font-bold">
         Card Number:{" "}
-        <span className="text-sky-400 font-normal">{card.number}</span>
+        <span className="text-sky-400 font-normal">{card?.number}</span>
       </p>
       <p className="text-gray-50 text-xl capitalize font-bold">
-        Client: <span className="text-sky-400 font-normal">{card.name}</span>
+        Client: <span className="text-sky-400 font-normal">{card?.name}</span>
       </p>
       <div className="p-2 flex gap-4 justify-end">
         <BsTrashFill
@@ -53,7 +54,7 @@ const CardItem = ({ card }) => {
           className="cursor-pointer"
           onClick={handleDelete}
         />
-        <Link to={`/export/${card._id}`}>
+        <Link to={`/export/${card?._id}`}>
           <TfiExport size={20} className="cursor-pointer" />
         </Link>
       </div>

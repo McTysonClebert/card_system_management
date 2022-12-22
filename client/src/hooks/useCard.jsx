@@ -36,6 +36,7 @@ const useCard = () => {
           type: "SET_CARDS",
           payload: json
         });
+        setError(null);
       }
     } catch (error) {
       console.log(`Error fetching card: ${error}`);
@@ -45,6 +46,8 @@ const useCard = () => {
   const fetchingCard = async (id) => {
     setIsLoading(true);
     setError(null);
+
+    console.log(id);
 
     try {
       const response = await fetch(`${url}/${id}`, {
@@ -68,6 +71,7 @@ const useCard = () => {
           type: "SET_CARD",
           payload: json
         });
+        setError(null);
       }
     } catch (error) {
       console.log(`Error fetching card: ${error}`);
@@ -101,6 +105,7 @@ const useCard = () => {
           type: "SET_VERIFY",
           payload: json
         });
+        setError(null);
       }
     } catch (error) {
       console.log(`Error fetching card: ${error}`);
@@ -131,6 +136,7 @@ const useCard = () => {
       if (response.ok) {
         setIsLoading(false);
         dispatch({ type: "CREATE_CARD", payload: json });
+        setError(null);
       }
     } catch (error) {
       console.log(`Error fetching card: ${error}`);
@@ -160,6 +166,7 @@ const useCard = () => {
       if (response.ok) {
         setIsLoading(false);
         dispatch({ type: "DELETE_CARD", payload: json });
+        setError(null);
       }
     } catch (error) {
       console.log(`Error fetching card: ${error}`);
