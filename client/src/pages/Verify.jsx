@@ -35,6 +35,12 @@ const Verify = () => {
         className="flex flex-col gap-4 w-screen md:w-1/3"
         onSubmit={handleConnect}
       >
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <Puff />
+          </div>
+        )}
+
         <div className="flex flex-col gap-2">
           <label
             className="font-bold text-xl text-center md:text-left"

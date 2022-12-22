@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Puff } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import { useUser } from "../hooks/useUser";
@@ -36,6 +37,12 @@ const Login = () => {
 
       <h1 className="text-2xl font-bold my-3 text-center">Login</h1>
       <form className="flex flex-col gap-4 w-full md:w-1/3">
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <Puff />
+          </div>
+        )}
+
         <div className="flex flex-col gap-1">
           <label className="font-bold" htmlFor="name">
             Username
