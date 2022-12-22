@@ -25,7 +25,7 @@ const UserContextProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
-      dispatch({ type: "LOGIN_USER", payload: storedUser });
+      dispatch({ type: "LOGIN_USER", payload: JSON.parse(storedUser) });
     }
   }, []);
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Puff } from "react-loader-spinner";
 import { useCard } from "../../hooks/useCard";
+import Error from "../Error";
 
 const types = ["vip", "standard", "family"];
 

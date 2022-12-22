@@ -3,8 +3,10 @@ import { TfiExport } from "react-icons/tfi";
 import { Puff } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useCard } from "../../hooks/useCard";
+import { useUserContext } from "../../context/UserContext";
 
 const CardItem = ({ card }) => {
+  const { user } = useUserContext();
   const { deleteCard, isLoading } = useCard();
 
   const handleDelete = async () => {
@@ -48,16 +50,18 @@ const CardItem = ({ card }) => {
       <p className="text-gray-50 text-xl capitalize font-bold">
         Client: <span className="text-sky-400 font-normal">{card?.name}</span>
       </p>
-      <div className="p-2 flex gap-4 justify-end">
-        <BsTrashFill
-          size={20}
-          className="cursor-pointer"
-          onClick={handleDelete}
-        />
-        <Link to={`/export/${card?._id}`}>
-          <TfiExport size={20} className="cursor-pointer" />
-        </Link>
-      </div>
+      {user?.role === "admin" && (
+        <div className="p-2 flex gap-4 justify-end">
+          <BsTrashFill
+            size={20}
+            className="cursor-pointer"
+            onClick={handleDelete}
+          />
+          <Link to={`/export/${card?._id}`}>
+            <TfiExport size={20} className="cursor-pointer" />
+          </Link>
+        </div>
+      )}
     </li>
   );
 };

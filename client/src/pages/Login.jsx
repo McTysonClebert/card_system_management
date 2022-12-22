@@ -17,16 +17,16 @@ const Login = () => {
   const [selectedRole, setSelectedRole] = useState(roles[0]);
   const { loginUser, isLoading, error } = useUser();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    await loginUser({ username, password, role: selectedRole });
-  };
-
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
     }
   }, [user]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await loginUser({ username, password, role: selectedRole });
+  };
 
   return (
     <div className="bg-slate-800 text-white w-screen h-screen p-4 flex flex-col justify-center items-center">

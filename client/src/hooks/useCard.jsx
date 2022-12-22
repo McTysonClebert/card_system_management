@@ -39,15 +39,13 @@ const useCard = () => {
         setError(null);
       }
     } catch (error) {
-      console.log(`Error fetching card: ${error}`);
+      console.log(`Error fetching cards: ${error.message}`);
     }
   };
 
   const fetchingCard = async (id) => {
     setIsLoading(true);
     setError(null);
-
-    console.log(id);
 
     try {
       const response = await fetch(`${url}/${id}`, {
@@ -108,7 +106,7 @@ const useCard = () => {
         setError(null);
       }
     } catch (error) {
-      console.log(`Error fetching card: ${error}`);
+      console.log(`Error vrifying card: ${error.message}`);
     }
   };
 
@@ -126,6 +124,7 @@ const useCard = () => {
         },
         body: JSON.stringify(card)
       });
+
       const json = await response.json();
 
       if (!response.ok) {
@@ -139,7 +138,7 @@ const useCard = () => {
         setError(null);
       }
     } catch (error) {
-      console.log(`Error fetching card: ${error}`);
+      console.log(`Error creating card: ${error.message}`);
     }
   };
 
@@ -169,7 +168,7 @@ const useCard = () => {
         setError(null);
       }
     } catch (error) {
-      console.log(`Error fetching card: ${error}`);
+      console.log(`Error deleting card: ${error.message}`);
     }
   };
 
