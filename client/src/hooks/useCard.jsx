@@ -103,6 +103,8 @@ const useCard = () => {
           type: "SET_VERIFY",
           payload: json
         });
+
+        localStorage.setItem("cardVerified", JSON.stringify(json));
         setError(null);
       }
     } catch (error) {

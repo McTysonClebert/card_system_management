@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useReducer, useContext, createContext } from "react";
 
 const CardContext = createContext();
@@ -13,7 +14,7 @@ const cardReducer = (state, action) => {
       return { ...state, card: payload };
 
     case "SET_VERIFY":
-      return { ...state, verified: payload.verified, card: payload.card };
+      return { ...state, card: payload.card, verified: payload.verified };
 
     case "CREATE_CARD":
       return { ...state, cards: [...state.cards, payload] };
@@ -36,6 +37,18 @@ const CardContextProvider = ({ children }) => {
     card: null,
     verified: false
   });
+
+  useEffect(() => {
+    const cardVerified = localStorage.getItem("cardVerified");
+
+    if (cardVerified) {
+      dispatch({ type: "SET_VERIFY", payload: JSON.parse(cardVerified) });
+    }
+  }, []);
+
+  console.log("====================================");
+  console.log(state);
+  console.log("====================================");
 
   return (
     <CardContext.Provider value={{ ...state, dispatch }}>

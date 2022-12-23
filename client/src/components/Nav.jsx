@@ -11,7 +11,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="bg-black text-white h-auto p-4 md:p-8 flex flex-col md:flex-row md:justify-between items-center gap-4">
+    <nav className="bg-black text-white h-auto p-4 flex flex-col md:flex-row md:justify-between items-center gap-4">
       <Link
         to={"/"}
         className="flex flex-col justify-center items-center md:flex-row gap-2"

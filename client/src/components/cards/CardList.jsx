@@ -20,7 +20,7 @@ const CardList = () => {
   }, []);
 
   return (
-    <div className="bg-slate-700 w-screen p-4 md:flex-1 md:overflow-y-auto relative">
+    <div className="flex flex-col bg-slate-700 w-screen p-4 md:flex-1 relative">
       {isLoading && (
         <div className="flex justify-center items-center">
           <Puff />
@@ -28,11 +28,11 @@ const CardList = () => {
       )}
 
       {cards.length <= 0 ? (
-        <h1 className="text-2xl font-bold my-3 text-center">
+        <h1 className="text-2xl font-bold my-2 text-center">
           Card List Is Empty
         </h1>
       ) : (
-        <h1 className="text-2xl font-bold my-3 text-center">Card List</h1>
+        <h1 className="text-2xl font-bold my-2 text-center">Card List</h1>
       )}
 
       <form className="flex flex-col gap-1 justify-center items-center mx-auto py-8 md:flex-row md:w-2/3">
@@ -61,7 +61,7 @@ const CardList = () => {
         </select>
       </form>
 
-      <ul className="flex flex-col gap-4 md:items-center">
+      <ul className="flex-1 flex flex-col gap-2 md:items-center h-3/5 overflow-y-auto">
         {cards
           .filter((item) => {
             if (!selectedType) return item.type !== selectedType;

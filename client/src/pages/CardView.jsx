@@ -4,6 +4,7 @@ import { useCard } from "../hooks/useCard";
 import CardItem from "../components/cards/CardItem";
 import Error from "../components/Error";
 import { useCardContext } from "../context/CardContext";
+import { Puff } from "react-loader-spinner";
 // import { useUserContext } from "../context/UserContext";
 
 const CardExport = () => {
@@ -11,8 +12,7 @@ const CardExport = () => {
   const { id } = useParams();
   const { fetchingCard, error, isLoading } = useCard();
 
-  const { card } = useCardContext();
-  // const { user } = useUserContext();
+  const { card, verified } = useCardContext();
 
   useEffect(() => {
     (async () => {
@@ -20,11 +20,11 @@ const CardExport = () => {
     })();
   }, [id]);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login", { replace: true });
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (!verified) {
+      navigate(`/verify/${id}`, { replace: true });
+    }
+  }, [verified]);
 
   return (
     <div className="flex flex-col justify-center items-center bg-slate-800 text-white w-screen h-screen p-4">
