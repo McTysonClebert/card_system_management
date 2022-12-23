@@ -35,7 +35,7 @@ const useUser = () => {
       }
 
       if (response.ok) {
-        localStorage.setItem("user", JSON.stringify(payload));
+        localStorage.setItem("user", JSON.stringify(json));
         dispatch({ type: "LOGIN_USER", payload: json });
       }
     } catch (error) {

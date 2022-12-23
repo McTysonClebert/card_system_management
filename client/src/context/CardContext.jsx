@@ -46,10 +46,6 @@ const CardContextProvider = ({ children }) => {
     }
   }, []);
 
-  console.log("====================================");
-  console.log(state);
-  console.log("====================================");
-
   return (
     <CardContext.Provider value={{ ...state, dispatch }}>
       {children}
