@@ -11,7 +11,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="bg-black text-white p-4 flex flex-col md:flex-row md:justify-between items-center gap-2">
+    <nav className="bg-black text-white h-auto p-4 md:p-8 flex flex-col md:flex-row md:justify-between items-center gap-8">
       <Link to={"/"}>
         <h1 className="font-bold text-2xl">Auth Card System</h1>
       </Link>

@@ -8,7 +8,7 @@ import Verify from "./pages/Verify";
 
 const App = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen w-screen">
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
