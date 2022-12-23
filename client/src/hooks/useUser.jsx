@@ -74,12 +74,55 @@ const useUser = () => {
     }
   };
 
+  const updateUser = async (user) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${url}/password`, {
+        mode: "cors",
+        method: "PATCH",
+        headers: {
+          Accept: "Appllication/Json",
+          "Content-Type": "Application/Json",
+          Authorization: `Bearer ${user.token}`
+        },
+        body: JSON.stringify({
+          oldPassword: user.oldPassword,
+          newPassword: user.newPassword
+        })
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        setIsLoading(false);
+        setError(json.error);
+      }
+
+      if (response.ok) {
+        localStorage.setItem("user", JSON.stringify(json));
+        dispatch({ type: "LOGIN_USER", payload: json });
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`);
+    }
+  };
+
   const logoutUser = () => {
     dispatch({ type: "LOGOUT_USER" });
     navigate("/login", { replace: true });
   };
 
-  return { registerUser, loginUser, logoutUser, isLoading, error };
+  return {
+    registerUser,
+    loginUser,
+    updateUser,
+    logoutUser,
+    isLoading,
+    error
+  };
 };
 
 export { useUser };

@@ -3,25 +3,25 @@ import { useState } from "react";
 import { Puff } from "react-loader-spinner";
 import { useUser } from "../hooks/useUser";
 import Error from "../components/Error";
+import { useUserContext } from "../context/UserContext";
 
-const roles = ["admin", "user"];
+const PasswordUpdate = () => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const { updateUser, isLoading, error } = useUser();
+  const { user } = useUserContext();
 
-const Register = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState(roles[0]);
-  const { registerUser, isLoading, error } = useUser();
-
-  const handleRegister = async (e) => {
+  const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    await registerUser({ username, password, role: selectedRole });
+    await updateUser({ token: user.token, oldPassword, newPassword });
   };
 
   return (
     <div className="bg-slate-800 text-white w-screen overflow-y-auto p-4 md:w-screen h-screen">
       {error && <Error error={error} />}
 
-      <h1 className="text-2xl font-bold my-3 text-center">Register</h1>
+      <h1 className="text-2xl font-bold my-4 text-center">Update Password</h1>
+
       <form className="flex flex-col gap-4 w-full md:w-1/3 md:mx-auto">
         {isLoading && (
           <div className="flex justify-center items-center">
@@ -30,59 +30,44 @@ const Register = () => {
         )}
 
         <div className="flex flex-col gap-1">
+          {/* TODO:Korije Name */}
           <label className="font-bold" htmlFor="name">
-            Username
+            Old Password
           </label>
           <input
             required
-            value={username}
+            value={oldPassword}
             className="bg-gray-900 py-2 px-4 outline-none border-none rounded-lg text-lg"
             type="text"
-            placeholder="Enter the username of the user"
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your old password"
+            onChange={(e) => setOldPassword(e.target.value)}
           />
         </div>
         <div className="flex flex-col gap-1">
           <label className="font-bold" htmlFor="name">
-            Password
+            New Password
           </label>
           <input
             required
-            value={password}
+            value={newPassword}
             className="bg-gray-900 py-2 px-4 outline-none border-none rounded-lg text-lg"
             type="text"
-            placeholder="Enter the password of the user"
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your new password"
+            onChange={(e) => setNewPassword(e.target.value)}
           />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label className="font-bold" htmlFor="type">
-            Role
-          </label>
-          <select
-            defaultValue={selectedRole}
-            className="bg-gray-900 py-2 px-4 outline-none border-none rounded-lg text-lg"
-            onChange={(e) => setSelectedRole(e.target.value)}
-          >
-            {roles.map((role, index) => (
-              <option key={index} value={role}>
-                {role.toLocaleUpperCase()}
-              </option>
-            ))}
-          </select>
         </div>
 
         <button
           type="submit"
           className="bg-sky-300 text-slate-900 font-bold py-3 px-4 my-2 outline-none border-none rounded-lg text-xl"
-          onClick={handleRegister}
+          onClick={handlePasswordUpdate}
           disabled={isLoading}
         >
-          Register
+          Update Password
         </button>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default PasswordUpdate;

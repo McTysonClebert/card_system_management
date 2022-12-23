@@ -73,4 +73,54 @@ const loginUser = async (req, res) => {
   res.status(201).json({ username: user.username, role: user.role, token });
 };
 
-export { registerUser, loginUser };
+const updateUserPassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  if (oldPassword === newPassword) {
+    return res.status(400).json({
+      error: "You're new password must be different from the previous password"
+    });
+  }
+
+  const userExiste = await User.findOne({ _id: req.user._id });
+
+  if (!userExiste) {
+    return res.status(400).json({ error: "User does not exist" });
+  }
+
+  if (!(await bcrypt.compare(oldPassword, userExiste.password))) {
+    return res.status(400).json({ error: "Incorrect password" });
+  }
+
+  if (!validator.isStrongPassword(newPassword)) {
+    return res
+      .status(400)
+      .json({ error: "The new password is not strong enough" });
+  }
+
+  const hashPassword = await bcrypt.hash(newPassword, 12);
+
+  const user = await User.findOneAndUpdate(
+    { _id: req.user._id },
+    { password: hashPassword },
+    { new: true }
+  );
+
+  const token = jwt.sign(
+    {
+      _id: user._id
+    },
+    process.env.SECRET_TOKEN_KEY,
+    {
+      expiresIn: "3h"
+    }
+  );
+
+  res.status(201).json({ username: user.username, role: user.role, token });
+};
+
+export { registerUser, loginUser, updateUserPassword };

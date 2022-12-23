@@ -36,7 +36,7 @@ const Nav = () => {
               Add New User
             </Link>
             <Link
-              to={"/register"}
+              to={"/update_password"}
               className="border-b-slate-700 border-b-4 text-lg px-1 w-full text-center rounded-lg md:w-auto cursor-pointer"
             >
               Change Password
