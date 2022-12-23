@@ -4,7 +4,7 @@ import { useCard } from "../hooks/useCard";
 import CardItem from "../components/cards/CardItem";
 import Error from "../components/Error";
 import { useCardContext } from "../context/CardContext";
-import { useUserContext } from "../context/UserContext";
+// import { useUserContext } from "../context/UserContext";
 
 const CardExport = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const CardExport = () => {
   const { fetchingCard, error, isLoading } = useCard();
 
   const { card } = useCardContext();
-  const { user } = useUserContext();
+  // const { user } = useUserContext();
 
   useEffect(() => {
     (async () => {
@@ -20,11 +20,11 @@ const CardExport = () => {
     })();
   }, [id]);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/login", { replace: true });
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate("/login", { replace: true });
+  //   }
+  // }, [user]);
 
   return (
     <div className="flex flex-col justify-center items-center bg-slate-800 text-white w-screen h-screen p-4">
