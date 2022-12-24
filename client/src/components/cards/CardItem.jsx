@@ -54,7 +54,7 @@ const CardItem = ({ card }) => {
       <p className="text-gray-50 text-xl capitalize font-bold">
         Date:{" "}
         <span className="text-sky-400 font-normal">
-          {format(new Date(card?.createdAt), "EEEE,MMMM do, yyyy hh:mm a")}
+          {format(new Date(card?.createdAt), "EEEE, MMMM do, yyyy hh:mm a")}
         </span>
       </p>
       {user?.role === "admin" && (
