@@ -4,6 +4,7 @@ import { Puff } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import { useCard } from "../../hooks/useCard";
 import { useUserContext } from "../../context/UserContext";
+import { format } from "date-fns";
 
 const CardItem = ({ card }) => {
   const { user } = useUserContext();
@@ -49,6 +50,12 @@ const CardItem = ({ card }) => {
       </p>
       <p className="text-gray-50 text-xl capitalize font-bold">
         Client: <span className="text-sky-400 font-normal">{card?.name}</span>
+      </p>
+      <p className="text-gray-50 text-xl capitalize font-bold">
+        Date:{" "}
+        <span className="text-sky-400 font-normal">
+          {format(new Date(card?.createdAt), "EEEE,MMMM do, yyyy hh:mm a")}
+        </span>
       </p>
       {user?.role === "admin" && (
         <div className="p-2 flex gap-4 justify-end">
