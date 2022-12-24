@@ -15,6 +15,12 @@ const createCard = async (req, res) => {
       .json({ error: "You must provide at least one member to create a card" });
   }
 
+  if (name.length < 5 || name.trim().split(" ").length < 2) {
+    return res
+      .status(400)
+      .json({ error: "Please enter the full name of client" });
+  }
+
   const card = await Card.create({
     name,
     type,

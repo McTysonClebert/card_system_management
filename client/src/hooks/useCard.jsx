@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCardContext } from "../context/CardContext";
 
 const url = "https://card-system-management.onrender.com/api/v1/cards";
 // const url = "http://localhost:8000/api/v1/cards";
 
 const useCard = () => {
+  const navigate = useNavigate();
   const { dispatch } = useCardContext();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -104,7 +106,7 @@ const useCard = () => {
           payload: json
         });
 
-        localStorage.setItem("cardVerified", JSON.stringify(json));
+        localStorage.setItem("cardVerified", JSON.stringify(json.card));
         setError(null);
       }
     } catch (error) {
@@ -168,6 +170,7 @@ const useCard = () => {
         setIsLoading(false);
         dispatch({ type: "DELETE_CARD", payload: json });
         setError(null);
+        navigate("/", { replace: true });
       }
     } catch (error) {
       console.log(`Error deleting card: ${error.message}`);

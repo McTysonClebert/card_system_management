@@ -5,7 +5,6 @@ import CardItem from "../components/cards/CardItem";
 import Error from "../components/Error";
 import { useCardContext } from "../context/CardContext";
 import { Puff } from "react-loader-spinner";
-// import { useUserContext } from "../context/UserContext";
 
 const CardExport = () => {
   const navigate = useNavigate();
@@ -23,6 +22,8 @@ const CardExport = () => {
   useEffect(() => {
     if (!verified) {
       navigate(`/verify/${id}`, { replace: true });
+    } else {
+      localStorage.removeItem("cardVerified");
     }
   }, [verified]);
 
